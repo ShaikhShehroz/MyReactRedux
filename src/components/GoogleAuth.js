@@ -23,7 +23,6 @@ class GoogleAuth extends React.Component{
        // this.onAuthChange();
         // here we adding listen property to authentication and making callback function event handler OnAuthChange.
         this.auth.isSignedIn.Listen(this.onAuthChange);
-
          }
         )
     });
