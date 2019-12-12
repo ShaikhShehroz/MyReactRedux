@@ -2,9 +2,12 @@
 //In these we are playing with googleAuth and googleAPI js Libraray
 
 import React from 'react';
+import {connect} from 'react-redux';
+import {signIn,signOut} from '../Actions';
 
 class GoogleAuth extends React.Component{
-    state = {isSignedIn:null};
+   //here i m removing state to initialize mapStatetoProps
+   // state = {isSignedIn:null};
 
    componentDidMount(){
     //here gapi.load we assign client auth paramater with one fnction
@@ -19,8 +22,11 @@ class GoogleAuth extends React.Component{
             // here we are giving promises once the output come it will in proper way
         this.auth = window.gapi.auth2.getAuthInstance();
         //we are changing the state if the .getAuthInstance value change//
-        this.setState({isSignedIn:this.auth.isSignedIn.get()});
-       // this.onAuthChange();
+      
+//  this.setState({isSignedIn:this.auth.isSignedIn.get()}); //here i remove setstate just because we are not using state.//
+     
+ this.onAuthChange(this.auth.isSignedIn.get());  // we are using it because of removing state
+
         // here we adding listen property to authentication and making callback function event handler OnAuthChange.
         this.auth.isSignedIn.Listen(this.onAuthChange);
          }
@@ -30,15 +36,24 @@ class GoogleAuth extends React.Component{
    }
 
    //we are writing the function for eventhandler is it is update the state for that what should be function.
-   onAuthChange=() => {
+   /*onAuthChange=() => {
     this.setState({isSignedIn:this.auth.isSignedIn.get()});
+   };*/
+
+   onAuthChange= isSignedIn => {
+       if (isSignedIn){
+            this.props.signIn();
+       }else{
+           this.props.signOut();
+       }
+   
    };
 
-   onSignIn=()=>{
+   onSignInClick=()=>{
        this.auth.signIn();
    };
 
-   onSignOut=()=>{
+   onSignOutClick=()=>{
     this.auth.signOut();
 };
 
@@ -54,11 +69,12 @@ class GoogleAuth extends React.Component{
        }
    }*/
    renderAuthButton(){
-    if(this.state.isSignedIn===null){
+       //here i replace state with props
+    if(this.props.isSignedIn === null){
         return null;
-    }else if(this.state.isSignedIn){
+    }else if(this.props.isSignedIn){
         return (
-             <button onClick={this.onSignOut} className="ui orange google button">
+             <button onClick={this.onSignOutClick} className="ui orange google button">
                  <i className ="google icon"/>
                  Sign Out 
              </button>
@@ -66,7 +82,7 @@ class GoogleAuth extends React.Component{
         );
     }else {
         return (
-            <button onClick={this.onSignIn} className="ui red google button">
+            <button onClick={this.onSignInClick} className="ui red google button">
                 <i className ="google icon"/>
                 Sign In with Google
             </button>
@@ -75,7 +91,6 @@ class GoogleAuth extends React.Component{
     }
    }
 
-   
    //here finally we are calling render button
     render(){
         return <div>{this.renderAuthButton()}</div>;
@@ -83,4 +98,13 @@ class GoogleAuth extends React.Component{
           
 }
 
-export default GoogleAuth;
+// mapstatetoprops we are intializing as a function for state to be called automatically
+
+const mapStatetoProps = (state)=>{
+    return {isSignedIn: state.auth.isSignedIn};
+};
+
+export default connect(
+    mapStatetoProps,
+    {signIn,signOut}
+) (GoogleAuth);
