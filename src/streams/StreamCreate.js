@@ -1,18 +1,25 @@
 import React from 'react';
-import {Field , reduxForm} from 'redux-form';
+import {Field , reduxForm, formValues} from 'redux-form';
 
 class StreamCreate extends React.Component{
+  renderError({error, touched}){
 
-      renderInput ({input, label}) {
-       //   New concept of (adding/showing) props in redux-form through {...input}.
+  }
+
+      renderInput = ({input, label,meta}) => {
+       //   1.New concept of (adding/showing) props in redux-form through {...input}.
+       //   2.Adding meta.error for validation 
         return(                                           
              <div classname= 'field' >
                     <label>{label}</label>
-                    <input {...input}/>     
+                    <input {...input} autoComplete="OFF"/>  
+                    <div>{meta.error}</div>  
              </div>
              );   
         
        }
+
+
        onSubmit(formVariable){
            console.log(formVariable);
        };
@@ -36,6 +43,25 @@ class StreamCreate extends React.Component{
   }
 }
 
+// creating function of Validation
+const validate = formValues =>{
+    const error = {};
+
+    if(!formValues.title){
+        error.title = "You Miss the Title";
+    }
+
+    if(!formValues.description){
+        error.description = "You Miss the Description";
+    }
+    return error;
+}
+
+
+
+
+
 export default reduxForm({
-    form : 'StreamCreate'
+    form : 'StreamCreate',
+    validate
 })(StreamCreate);
