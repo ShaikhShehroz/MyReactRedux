@@ -1,27 +1,38 @@
 import React from 'react';
 import {Field , reduxForm, formValues} from 'redux-form';
+import {createStream} from '../../src/Actions';
+import {connect} from 'react-redux';
 
 class StreamCreate extends React.Component{
   renderError({error, touched}){
+      if (touched && error){
+          return(
+              <div className ="ui error message">
+                  <div className = "header">{error}</div>
+              </div>
+          );
+      }
 
   }
 
       renderInput = ({input, label,meta}) => {
        //   1.New concept of (adding/showing) props in redux-form through {...input}.
        //   2.Adding meta.error for validation 
-        return(                                           
-             <div classname= 'field' >
+       const className = `field ${meta.error && meta.touched ? 'error':''}`;
+       return(                                           
+             <div classname= {className}>
                     <label>{label}</label>
-                    <input {...input} autoComplete="OFF"/>  
-                    <div>{meta.error}</div>  
+                    <input {...input} autoComplete="off"/>  
+                    {this.renderError(meta)}
              </div>
              );   
         
        }
 
+//calling createstream data on submit button
 
-       onSubmit(formVariable){
-           console.log(formVariable);
+       onSubmit=formValues=>{
+           this.props.createStream(formValues);
        };
 
   render(){
@@ -30,7 +41,7 @@ class StreamCreate extends React.Component{
           
             <form 
             onSubmit={this.props.handleSubmit(this.onSubmit)} 
-            className = "ui form"
+            className = "ui form error"
             >
                 <Field name = "title"  component ={this.renderInput} label ="Enter the Name" />
                 <Field name = "description"  component ={this.renderInput} label = "Enter the Description" />
@@ -57,11 +68,9 @@ const validate = formValues =>{
     return error;
 }
 
-
-
-
-
-export default reduxForm({
+const formWrapped = reduxForm({
     form : 'StreamCreate',
     validate
 })(StreamCreate);
+
+export default connect(null,{createStream})(formWrapped);

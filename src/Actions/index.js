@@ -1,8 +1,11 @@
 // In action.js here we are assigning action to be held in browsers
 import {SIGN_IN,SIGN_OUT} from './type';
-export const signIn = ()=>{
+import streams from '../apis/streams';
+
+export const signIn = userId=>{
   return{
-      type : SIGN_IN
+      type : SIGN_IN,
+      payload : userId
   };
 };
 
@@ -13,3 +16,6 @@ export const signOut = () =>{
   };
 };
 
+export const createStream = (formValues)= async dispatch =>{
+     streams.post('/streams', formValues);
+};
