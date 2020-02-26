@@ -16,16 +16,18 @@ class GoogleAuth extends React.Component{
 
         window.gapi.client.init({
         
-           clientId:'271495339040-qr4vrj1mp6obqubhcs43glgk15cp65fe.apps.googleusercontent.com',
+           clientId:
+           '271495339040-qr4vrj1mp6obqubhcs43glgk15cp65fe.apps.googleusercontent.com',
            scope:'email'
-        }).then(()=>{
+        })
+        .then(()=>{
             // here we are giving promises once the output come it will in proper way
         this.auth = window.gapi.auth2.getAuthInstance();
         //we are changing the state if the .getAuthInstance value change//
       
 //  this.setState({isSignedIn:this.auth.isSignedIn.get()}); //here i remove setstate just because we are not using state.//
      
- this.onAuthChange(this.auth.isSignedIn.get());  // we are using it because of removing state
+        this.onAuthChange(this.auth.isSignedIn.get());  // we are using it because of removing state
 
         // here we adding listen property to authentication and making callback function event handler OnAuthChange.
         this.auth.isSignedIn.Listen(this.onAuthChange);
@@ -42,20 +44,21 @@ class GoogleAuth extends React.Component{
 
    onAuthChange= isSignedIn => {
        if (isSignedIn){
-            this.props.signIn();
+        this.props.signIn(this.auth.currentUser.get().getId());
        }else{
            this.props.signOut();
        }
    
    };
 
-   onSignInClick=()=>{
-       this.auth.signIn();
-   };
+   onSignInClick = () => {
+    this.auth.signIn();
+  };
 
-   onSignOutClick=()=>{
+  onSignOutClick = () => {
     this.auth.signOut();
-};
+  };
+
 
 // here we are rendering the AuthButton//
 //if it is signedin then it will show i am signed in or if it is signed out the it is show i am not sign in

@@ -6,7 +6,8 @@ import StreamDelete from '../streams/StreamDelete';
 import StreamEdit from '../streams/StreamEdit';
 import StreamShow from '../streams/StreamShow';
 import Header from '../components/Header'
-import { BrowserRouter,Route} from 'react-router-dom';
+import { Router,Route} from 'react-router-dom';
+import history from '../history'
 
 
              /*   const pageOne =()=>{
@@ -21,7 +22,7 @@ import { BrowserRouter,Route} from 'react-router-dom';
 const App =()=>{
     return (
   <div>
-      <BrowserRouter>
+      <Router history={history}>
       <div>
           <Header />
             <Route path ="/" exact component = {StreamList}/>
@@ -30,7 +31,7 @@ const App =()=>{
             <Route path ="/Stream/delete" exact component ={StreamDelete}/>
             <Route path ="/Stream/show" exact component ={StreamShow}/>
       </div>
-       </BrowserRouter>  
+       </Router>  
   </div>
   );    
 };

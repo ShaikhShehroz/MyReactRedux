@@ -9,7 +9,10 @@ import ReduxThunk from 'redux-thunk';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__|| compose;
 
-const store = createStore(Reducers, composeEnhancers(applyMiddleware(ReduxThunk)));
+const store = createStore(
+    Reducers, 
+    composeEnhancers(applyMiddleware(ReduxThunk))
+    );
 
 
 
@@ -17,4 +20,6 @@ const store = createStore(Reducers, composeEnhancers(applyMiddleware(ReduxThunk)
 ReactDOM.render(
 <Provider store= {store}>
 <App/>
-</Provider>,document.querySelector('#root'));
+</Provider>,
+document.querySelector('#root')
+);
