@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
 import StreamList from '../streams/StreamList';
 import StreamCreate from '../streams/StreamCreate';
 import StreamDelete from '../streams/StreamDelete';
@@ -27,7 +27,7 @@ const App =()=>{
           <Header />
             <Route path ="/" exact component = {StreamList}/>
             <Route path ="/Stream/new"  exact component ={StreamCreate}/>
-            <Route path ="/Stream/edit" exact  component ={StreamEdit}/>
+            <Route path ="/Stream/edit/:id" exact  component ={StreamEdit}/>
             <Route path ="/Stream/delete" exact component ={StreamDelete}/>
             <Route path ="/Stream/show" exact component ={StreamShow}/>
       </div>
