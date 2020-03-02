@@ -48,9 +48,15 @@ export const fetchStream = (id) => async dispatch =>{
   dispatch({type : FETCH_STREAM , payload: response.data});
 };
 
+
+
+
 export const editStream = (id,formValues) => async dispatch =>{
-  const response =await streams.put(`/streams/${id}`,formValues);
+  // const response =await streams.put(`/streams/${id}`,formValues);
+  //here we replace put to patch because of incorrect response from backend. so better use patch while taking response
+ const response =await streams.patch(`/streams/${id}`,formValues);  
   dispatch({type : EDIT_STREAM , payload: response.data});
+  history.push('/');
 };
 
 export const deleteStream = id => async dispatch =>{
