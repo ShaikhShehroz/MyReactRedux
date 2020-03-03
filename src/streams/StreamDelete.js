@@ -15,6 +15,7 @@ componentDidMount(){
 
         const {id} = this.props.match.params;
       return(
+          //react.fragment is used to make two different button in a same size separately
             <React.Fragment>
                 <button 
                 onClick ={()=> this.props.deleteStream(id)}
@@ -48,7 +49,7 @@ render(){
 
 }
 const mapStateToProps = (state,ownProps)=>{
-    return  { stream: state.streams[ownProps.match.params.id] };
+    return  { stream: state.streams[ownProps.match.params.id] }; 
 };
 
 export default connect(mapStateToProps,{fetchStream,deleteStream})(StreamDelete);

@@ -50,8 +50,6 @@ export const fetchStream = (id) => async dispatch =>{
 };
 
 
-
-
 export const editStream = (id,formValues) => async dispatch =>{
   // const response =await streams.put(`/streams/${id}`,formValues);
   //here we replace put to patch because of incorrect response from backend. so better use patch while taking response
@@ -63,7 +61,8 @@ export const editStream = (id,formValues) => async dispatch =>{
 export const deleteStream = id => async dispatch =>{
  await streams.delete(`/streams/${id}`);
   dispatch({type : DELETE_STREAM , payload: id});
-  history.push('/');
+  //after clicking to delete button form should load to start position so we used history.push('/')
+  history.push('/'); 
 
 };
 
