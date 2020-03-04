@@ -34,3 +34,8 @@ const Reducers = (state={},action)=>{
            return state;
    }
 };
+
+
+// https://obsproject.com/         // intalling obs from website for player 
+// https://github.com/illuspas/Node-Media-Server        // for installing node-media server in rtmpserver
+//npmjs.com/package/flv.js  // video player packages
